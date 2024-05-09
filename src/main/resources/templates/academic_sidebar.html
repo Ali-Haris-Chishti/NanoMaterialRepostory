@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .menu-item {
+            background: #555555;
+            display: block;
+            margin-bottom: 10px;
+            font-family: "Eras Medium ITC",monospace;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px;
+        }
+        .menu-item:hover {
+            text-decoration: underline;
+            color: #4CA250;
+        }
+        .selected {
+            background-color: #555;
+        }
+        .logout {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f00;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .logout:hover {
+            background-color: #c00;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <a href="/academic/filter" class="menu-item" th:classappend="${filSelected} ? 'selected' : ''">Advanced Search</a>
+    <a href="/academic/export" target="_blank" class="menu-item" th:classappend="${expSelected} ? 'selected' : ''">Export Report</a>
+    <a href="/login" class="logout">Log Out</a>
+</div>
+</body>
+</html>

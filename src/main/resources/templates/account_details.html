@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+        }
+        .account_table{
+            font-size: 20px;
+            alignment-baseline: center;
+            font-family: "Times New Roman",monospace;
+            margin: 200px;
+        }
+        .table_cell{
+            padding: 15px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="student_sidebar.html"></div>
+<div>
+    <table border="1" class="account_table">
+        <tr>
+            <th class="table_cell">NAME</th>
+            <td class="table_cell" th:text="${name}"></td>
+        </tr>
+        <tr>
+            <th class="table_cell">EMAIL</th>
+            <td class="table_cell" th:text="${email}"></td>
+        </tr>
+        <tr>
+            <th class="table_cell">PHONE</th>
+            <td class="table_cell" th:text="${phone}"></td>
+        </tr>
+        <tr>
+            <th class="table_cell">PASSWORD</th>
+            <td class="table_cell" th:text="${password}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .registration-container {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .registration-container input[type="text"],
+        .registration-container input[type="email"],
+        .registration-container input[type="password"],
+        .registration-container select,
+        .registration-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .registration-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .registration-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .login-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="registration-container">
+    <h2>Registration</h2>
+    <form id="myForm" action="/add">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="text" name="phone" placeholder="Phone Number">
+        <input type="password" name="password" placeholder="Password">
+        <select name="role">
+            <option value="STUDENT">Student</option>
+            <option value="ACADEMIC_STAFF">Academic Staff</option>
+            <option value="ADMINISTRATOR">Administrator</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <div class="login-link">
+        <span>Already have an account?</span>
+        <a href="/login">Login here</a>
+    </div>
+</div>
+</body>
+</html>

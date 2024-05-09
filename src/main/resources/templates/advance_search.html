@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+        }
+
+        .form2{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 50px;
+        }
+        label{
+            font-family: "Times New Roman Bold", monospace;
+            font-size: 18px;
+        }
+        .element{
+            font-family: Castellar, monospace;
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .nano_table{
+            font-size: 20px;
+            font-family: "Times New Roman",monospace;
+            margin: 50px 30px 25px 100px;
+        }
+        .table_cell{
+            padding: 10px;
+        }
+        .main{
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
+
+</head>
+<body>
+<div th:replace="academic_sidebar.html"></div>
+<div class="main">
+    <div class="form">
+        <h2>Filter</h2>
+        <form id="myForm" class="form2" action="/academic/filter">
+            <input type="text" class="element" name="name" placeholder="Name Initials">
+            <label>Properties</label>
+            <select name="property" class="element">
+                <option value="">Any Type</option>
+                <option value="conductivity">Conductivity</option>
+                <option value="strength">Strength</option>
+                <option value="fluorescent">Fluorescent</option>
+                <option value="biocompatible">BioCompatible</option>
+            </select>
+            <label>Material Structure</label>
+            <select name="structure" class="element">
+                <option value="">Any Structure</option>
+                <option value="hexagonal lattice">Hexagonal Lattice</option>
+                <option value="amorphous">Amorphous</option>
+                <option value="cylindrical">Cylindrical</option>
+            </select>
+            <button type="submit">Apply Filters</button>
+        </form>
+        <div th:each="nano: ${nanoMaterials}" class="table-container">
+            <table border="1" class="nano_table">
+                <tr>
+                    <th class="table_cell">MATERIAL ID</th>
+                    <td class="table_cell" th:text="${nano.nanoId}"></td>
+                </tr>
+                <tr>
+                    <th class="table_cell">FORMULA</th>
+                    <td class="table_cell" th:text="${nano.formula}"></td>
+                </tr>
+                <tr>
+                    <th class="table_cell">NAME</th>
+                    <td class="table_cell" th:text="${nano.name}"></td>
+                </tr>
+                <tr>
+                    <th class="table_cell">PROPERTIES</th>
+                    <td class="table_cell" th:text="${nano.properties}"></td>
+                </tr>
+                <tr>
+                    <th class="table_cell">STRUCTURE</th>
+                    <td class="table_cell" th:text="${nano.structure}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

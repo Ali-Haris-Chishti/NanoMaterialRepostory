@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .welcome {
+            margin-left: 50px;
+            margin-top: 40px;
+            font-family: "Bookman Old Style",cursive;
+        }
+
+
+    </style>
+</head>
+<body>
+<div th:replace="academic_sidebar.html"></div>
+<h1 class="welcome" th:text="WELCOME"></h1>
+<h2 class="welcome" th:text="${name}"></h2>
+</body>
+</html>
