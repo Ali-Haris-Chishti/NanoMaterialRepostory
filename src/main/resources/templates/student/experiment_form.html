@@ -64,10 +64,10 @@
     </style>
 </head>
 <body>
-<div th:replace="student_sidebar.html"></div>
+<div th:replace="student/sidebar.html"></div>
 <div class="container">
     <h1>Experiment Input Form</h1>
-    <form action="/user/submit-experiment" method="get">
+    <form action="/student/submit-experiment" method="get">
         <div>
             <label for="materialName">Material Name:</label>
             <select id="materialName" name="materialName" required>

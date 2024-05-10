@@ -1,9 +1,9 @@
 package com.example.nmr.controller;
 
 import com.example.nmr.model.Experiment;
-import com.example.nmr.model.NanoMaterial;
 import com.example.nmr.service.ExpService;
 import com.example.nmr.service.NanoService;
+import com.example.nmr.service.StudentService;
 import com.example.nmr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/student")
+public class StudentController {
+    StudentService studentService;
+    @Autowired
+    void setStudentService(StudentService service){
+        this.studentService = service;
+    }
+
     UserService userService;
     @Autowired
     void setUserService(UserService service){
@@ -34,21 +38,16 @@ public class UserController {
         this.expService = service;
     }
 
-    @GetMapping("/{role}")
-    ModelAndView showUserDashboard(Model model, @PathVariable String role){
+    @GetMapping("/dashboard")
+    ModelAndView showUserDashboard(Model model){
         model.addAttribute("name", userService.getName());
-        if (role.equalsIgnoreCase("STUDENT")) {
-            return new ModelAndView("student_dashboard");
-        }
-        else if (role.equalsIgnoreCase("ACADEMIC"))
-            return new ModelAndView("academic_staff_dashboard");
-        else return new ModelAndView("");
+            return new ModelAndView("student/dashboard");
     }
 
     @GetMapping("/account")
     ModelAndView showAccountDetails(Model model){
-        userService.setUserDetails(model);
-        return new ModelAndView("account_details");
+        studentService.setStudentDetails(model);
+        return new ModelAndView("student/account_details");
     }
 
 
@@ -59,19 +58,19 @@ public class UserController {
         Experiment experiment = new Experiment(type, parameters, nanoService.getMaterialByName(materialName));
         expService.saveExperiment(experiment);
 
-        return new ModelAndView("redirect:/user/submit-exp"); // Redirect to another endpoint or Thymeleaf template
+        return new ModelAndView("redirect:/student/submit-exp"); // Redirect to another endpoint or Thymeleaf template
     }
     @GetMapping("/submit-exp")
     public ModelAndView showSubmitExperimentForm(Model model) {
         model.addAttribute("subSelected", true);
         nanoService.mapMaterialNames(model);
-        return new ModelAndView("experiment_form"); // Redirect to another endpoint or Thymeleaf template
+        return new ModelAndView("student/experiment_form"); // Redirect to another endpoint or Thymeleaf template
     }
 
     @GetMapping("/experiments")
     ModelAndView showFilteredResults(Model model, @RequestParam(required = false) String nano, @RequestParam(required = false) String type){
-        userService.mapExperiments(model, nano, type);
+        studentService.mapExperiments(model, nano, type);
         nanoService.mapMaterialNames(model);
-        return new ModelAndView("view_result");
+        return new ModelAndView("student/view_result");
     }
 }

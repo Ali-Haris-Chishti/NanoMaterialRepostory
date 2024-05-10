@@ -178,4 +178,9 @@ public class UserService {
         System.out.println(materials);
         model.addAttribute("nanoMaterials", materials);
     }
+
+    public User getUser(int id) {
+        Optional<User> user = userRepo.findById(id);
+        return user.orElseGet(User::new);
+    }
 }

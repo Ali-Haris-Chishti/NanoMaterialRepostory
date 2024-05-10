@@ -27,7 +27,7 @@
             color: #4CA250;
         }
         .selected {
-            background-color: #555;
+            color: #007bff;
         }
         .logout {
             display: block;
@@ -45,9 +45,8 @@
 </head>
 <body>
 <div class="sidebar">
-    <a href="/user/experiments" class="menu-item" th:classappend="${expSelected} ? 'selected' : ''">View Experiment</a>
-    <a href="/user/submit-exp" class="menu-item" th:classappend="${subSelected} ? 'selected' : ''">Submit Experimental Data</a>
-    <a href="/user/account" class="menu-item" th:classappend="${accSelected} ? 'selected' : ''">Account</a>
+    <a href="/admin/accounts" class="menu-item" th:classappend="${mgSelected} ? 'selected' : ''">Manage Accounts</a>
+    <a href="/admin/database" class="menu-item" th:classappend="${dbSelected} ? 'selected' : ''">View Database</a>
     <a href="/login" class="logout">Log Out</a>
 </div>
 </body>

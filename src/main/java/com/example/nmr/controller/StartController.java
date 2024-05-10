@@ -1,11 +1,12 @@
 package com.example.nmr.controller;
 
-import com.example.nmr.model.Experiment;
+import com.example.nmr.model.CurrentUser;
 import com.example.nmr.model.NanoMaterial;
 import com.example.nmr.model.User;
 import com.example.nmr.repository.NanoRepo;
+import com.example.nmr.repository.UserRepo;
+import com.example.nmr.service.StudentService;
 import com.example.nmr.service.UserService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class StartController {
+
     UserService userService;
     @Autowired
     void setUserService(UserService service){
@@ -24,13 +26,11 @@ public class StartController {
 
     @RequestMapping(value = {"/", "/home", "/login"})
     String getLoginPage(){
-        userService.currentUser = new User();
-
-// Add more nano materials as needed...
-
+        CurrentUser.set(new User());
         return "login";
     }
 
+    // Sample mapping to add test values to database
     @RequestMapping("/a")
     void add(){
         NanoMaterial nanoMaterial1 = new NanoMaterial("Graphene", "C", "Hexagonal lattice", "High electrical conductivity, high mechanical strength");
@@ -59,13 +59,13 @@ public class StartController {
     {
         User user = new User(name, email, phone, password, role);
         userService.addUser(user);
-        userService.currentUser = user;
+        CurrentUser.set(user);
         if (role.equalsIgnoreCase("STUDENT"))
-            return "redirect:/user/STUDENT";
+            return "redirect:/student/dashboard";
         else if (role.equalsIgnoreCase("ACADEMIC_STAFF"))
-            return "redirect:/user/ACADEMIC";
+            return "redirect:/academic/dashboard";
         else
-            return "redirect:/register";
+            return "redirect:/admin/dashboard";
     }
 
     @GetMapping("/check")
@@ -73,21 +73,15 @@ public class StartController {
         if (userService.checkCredentials(email, password, role)){
             int id = userService.getIdByEmail();
             model.addAttribute("message", "");
+            CurrentUser.set(userService.getUser(id));
             if (role.equalsIgnoreCase("STUDENT"))
-                return "redirect:/user/STUDENT";
+                return "redirect:/student/dashboard";
             else if (role.equalsIgnoreCase("ACADEMIC_STAFF"))
-                return "redirect:/user/ACADEMIC";
+                return "redirect:/academic/dashboard";
             else
-                return "redirect:/register";
+                return "redirect:/admin/dashboard";
         }
         model.addAttribute("message", "Invalid Login");
         return "login";
-    }
-
-    @Data
-    public static class LoginData{
-        String email;
-        String password;
-        String role;
     }
 }

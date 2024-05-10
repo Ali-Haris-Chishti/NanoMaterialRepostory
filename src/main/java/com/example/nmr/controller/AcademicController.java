@@ -1,5 +1,6 @@
 package com.example.nmr.controller;
 
+import com.example.nmr.model.CurrentUser;
 import com.example.nmr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,12 @@ public class AcademicController {
         this.userService = service;
     }
 
+    @GetMapping("/dashboard")
+    ModelAndView showDashboard(Model model){
+        model.addAttribute("name", CurrentUser.get().getName());
+        return new ModelAndView("academic/dashboard");
+    }
+
     @GetMapping("/export")
     public ResponseEntity<byte[]> downloadPdf() throws IOException {
         byte[] pdfContent = userService.generatePdf();
@@ -42,6 +49,6 @@ public class AcademicController {
                               @RequestParam(required = false) String structure,
                               Model model){
         userService.applyAcademicFilters(model, name, property, structure);
-        return new ModelAndView("advance_search");
+        return new ModelAndView("academic/advance_search");
     }
 }

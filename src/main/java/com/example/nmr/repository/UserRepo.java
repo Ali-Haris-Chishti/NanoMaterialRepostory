@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends CrudRepository<User, Integer> {
     Optional<User> findByEmailAndPasswordAndRole(String email, String password, String role);
+
+    List<User> findAllByRole(String student);
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+        }
+        .main{
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 30px;
+        }
+
+        .account_table{
+            font-size: 20px;
+            font-family: "Times New Roman",monospace;
+            margin-top: 30px;
+            margin-right: 30px;
+            margin-left: 100px;
+        }
+        .filter{
+            font-size: 21px;
+            font-family: "Fira Code Bold",monospace;
+            margin-left: 120px;
+        }
+        .filter_head{
+            font-size: 21px;
+            font-family: "Fira Code Bold",monospace;
+            margin-left: 120px;
+            margin-top: 75px;
+        }
+        .table_cell{
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="student/sidebar.html"></div>
+<div class="main">
+    <form class="filter_head" method="get" action="/user/experiments">
+        Filter Results:
+        <div class="filter">
+            <label for="materialName">Material Name:</label>
+            <select id="materialName" name="nano">
+                <option value="">All materials</option>
+                <option th:each="name : ${materialNames}" th:text="${name}"></option>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="">All Types</option>
+                <option value="Morphology">Morphology</option>
+                <option value="X-Ray Diffraction">X-Ray Diffraction</option>
+                <option value="I-V Characteristic">I-V Characteristic</option>
+                <option value="UV-Vis Spectra">UV-Vis Spectra</option>
+            </select>
+        </div>
+        <button type="submit">Apply Filters</button>
+    </form>
+    <div th:each="exp: ${experiments}" class="table-container">
+        <table border="1" class="account_table">
+            <tr>
+                <th class="table_cell">EXPERIMENT ID</th>
+                <td class="table_cell" th:text="${exp.expId}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">NANO MATERIAL USED</th>
+                <td class="table_cell" th:text="${exp.nanoMaterial.name}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">EXPERIMENT TYPE</th>
+                <td class="table_cell" th:text="${exp.type}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">PARAMETERS</th>
+                <td class="table_cell" th:text="${exp.parameters}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

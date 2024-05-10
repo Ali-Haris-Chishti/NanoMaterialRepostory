@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+        }
+        .main{
+            flex-direction: column;
+            padding-bottom: 30px;
+            margin-left: 100px;
+        }
+
+        .account_table{
+            font-size: 20px;
+            font-family: "Times New Roman",monospace;
+            margin-top: 30px;
+            margin-right: 30px;
+        }
+        .option{
+            background: #555555;
+            color: #f4f4f4;
+            border-radius: 3px;
+            padding: 5px;
+            width: 200px;
+        }
+        .bdiv{
+            margin-left: 25px;
+            margin-top: 15px;
+            margin-bottom: 50px;
+        }
+        .table_cell{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/sidebar.html"></div>
+<div>
+    <div class="main" th:each="user: ${users}">
+        <table border="1" class="account_table">
+            <tr>
+                <th class="table_cell">ID</th>
+                <td class="table_cell" th:text="${user.userId}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">NAME</th>
+                <td class="table_cell" th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">EMAIL</th>
+                <td class="table_cell" th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <th class="table_cell">PHONE</th>
+                <td class="table_cell" th:text="${user.phoneNumber}"></td>
+            </tr>
+        </table>
+        <div class="bdiv">
+            <a th:href="@{/admin/delete/{id}(id=${user.userId})}" class="option">DELETE USER</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
