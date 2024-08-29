@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ExperimentRepo extends CrudRepository<Experiment, Integer> {
-    List<Experiment> findByNanoMaterialAndType(NanoMaterial material, String type);
+    List<Experiment> findByNanoMaterialAndExperimentType(NanoMaterial material, String type);
     List<Experiment> findByNanoMaterial(NanoMaterial material);
-    List<Experiment> findByType(String type);
+    List<Experiment> findByExperimentType(String type);
 }

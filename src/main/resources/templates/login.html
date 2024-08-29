@@ -6,39 +6,66 @@
     <title>Login Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #4caf50, #87e075);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
         .login-container {
-            width: 300px;
-            margin: 0 auto;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .login-container h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #4caf50;
+            margin-bottom: 30px;
+            font-weight: bold;
         }
         .login-container input[type="text"],
         .login-container input[type="password"],
         .login-container select,
-        .login-container input[type="submit"] {
+        .login-container button {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-size: 16px;
         }
-        .login-container input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
+        .login-container input[type="text"]:focus,
+        .login-container input[type="password"]:focus,
+        .login-container select:focus,
+        .login-container button:focus {
+            border-color: #4caf50;
+            outline: none;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        }
+        .login-container button {
+            background-color: #4caf50;
+            color: #fff;
             border: none;
             cursor: pointer;
         }
-        .login-container input[type="submit"]:hover {
+        .login-container button:hover {
             background-color: #45a049;
         }
         .register-link {
@@ -47,10 +74,16 @@
         }
         .register-link a {
             text-decoration: none;
-            color: #007bff;
+            color: #4caf50;
+            font-weight: bold;
         }
         .register-link a:hover {
             text-decoration: underline;
+        }
+        .login-container h6 {
+            text-align: center;
+            color: red;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -58,7 +91,7 @@
 <div class="login-container">
     <h2>Login</h2>
     <form id="myForm" action="/check">
-        <input type="text" name="email" placeholder="Username" required>
+        <input type="text" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <select name="role" required>
             <option value="" disabled selected>Select Role</option>
@@ -68,7 +101,6 @@
         </select>
         <button type="submit">Log In</button>
     </form>
-
     <div class="register-link">
         <span>Not a user?</span>
         <a href="/register">Register here</a>

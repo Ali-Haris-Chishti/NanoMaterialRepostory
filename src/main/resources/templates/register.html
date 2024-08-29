@@ -6,40 +6,68 @@
     <title>Registration Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #4caf50, #87e075);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
         .registration-container {
-            width: 300px;
-            margin: 0 auto;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .registration-container h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #4caf50;
+            margin-bottom: 30px;
+            font-weight: bold;
         }
         .registration-container input[type="text"],
         .registration-container input[type="email"],
         .registration-container input[type="password"],
         .registration-container select,
-        .registration-container input[type="submit"] {
+        .registration-container button {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-size: 16px;
         }
-        .registration-container input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
+        .registration-container input[type="text"]:focus,
+        .registration-container input[type="email"]:focus,
+        .registration-container input[type="password"]:focus,
+        .registration-container select:focus,
+        .registration-container button:focus {
+            border-color: #4caf50;
+            outline: none;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        }
+        .registration-container button {
+            background-color: #4caf50;
+            color: #fff;
             border: none;
             cursor: pointer;
         }
-        .registration-container input[type="submit"]:hover {
+        .registration-container button:hover {
             background-color: #45a049;
         }
         .login-link {
@@ -48,7 +76,8 @@
         }
         .login-link a {
             text-decoration: none;
-            color: #007bff;
+            color: #4caf50;
+            font-weight: bold;
         }
         .login-link a:hover {
             text-decoration: underline;
@@ -59,11 +88,12 @@
 <div class="registration-container">
     <h2>Registration</h2>
     <form id="myForm" action="/add">
-        <input type="text" name="name" placeholder="Name">
-        <input type="email" name="email" placeholder="Email">
-        <input type="text" name="phone" placeholder="Phone Number">
-        <input type="password" name="password" placeholder="Password">
-        <select name="role">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <select name="role" required>
+            <option value="" disabled selected>Select Role</option>
             <option value="STUDENT">Student</option>
             <option value="ACADEMIC_STAFF">Academic Staff</option>
             <option value="ADMINISTRATOR">Administrator</option>

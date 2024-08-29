@@ -3,88 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Experiment Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
             padding: 0;
             height: 100vh;
-            margin: 0;
             display: flex;
-        }
-        .main{
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 30px;
+            background-color: #f0f8f5;
+            color: #333;
         }
 
-        .account_table{
-            font-size: 20px;
-            font-family: "Times New Roman",monospace;
-            margin-top: 30px;
-            margin-right: 30px;
-            margin-left: 100px;
-        }
-        .filter{
-            font-size: 21px;
-            font-family: "Fira Code Bold",monospace;
-            margin-left: 120px;
-        }
-        .filter_head{
-            font-size: 21px;
-            font-family: "Fira Code Bold",monospace;
-            margin-left: 120px;
-            margin-top: 75px;
-        }
-        .table_cell{
-            padding: 10px;
+        .container {
+            margin-left: 270px; /* Adjusted for sidebar width */
+            padding: 20px;
+            width: calc(100% - 270px);
         }
 
+        .experiment {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .experiment h2 {
+            color: #4CA250;
+        }
+
+        .experiment img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .experiment p {
+            margin: 5px 0;
+        }
+
+        .experiment .details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .experiment .details div {
+            width: 48%;
+        }
     </style>
 </head>
 <body>
 <div th:replace="student/sidebar.html"></div>
-<div class="main">
-    <form class="filter_head" method="get" action="/user/experiments">
-        Filter Results:
-        <div class="filter">
-            <label for="materialName">Material Name:</label>
-            <select id="materialName" name="nano">
-                <option value="">All materials</option>
-                <option th:each="name : ${materialNames}" th:text="${name}"></option>
-            </select>
+<div class="container">
+    <h1>Experiments</h1>
+    <div th:each="experiment : ${experiments}">
+        <div class="experiment">
+            <h2 th:text="${experiment.experimentType}"></h2>
+            <p><strong>Material Name:</strong> <span th:text="${experiment.nanoMaterial.name}"></span></p>
+            <p><strong>Testing Parameter:</strong> <span th:text="${experiment.parameterType}"></span></p>
+            <p><strong>Parameter Value:</strong> <span th:text="${experiment.parameterValue}"></span> <span th:text="${experiment.parameterType == 'Temperature' ? '°C' : 'g/L'}"></span></p>
+            <div th:if="${experiment.experimentType == 'Morphology' || experiment.experimentType == 'X-Ray Diffraction' || experiment.experimentType == 'UV-Vis Spectra'}">
+                <div class="details">
+                    <div th:if="${experiment.experimentType == 'Morphology'}">
+                        <p><strong>Length:</strong> <span th:text="${experiment.length}"></span></p>
+                        <p><strong>Diameter:</strong> <span th:text="${experiment.diameter}"></span></p>
+                    </div>
+                    <div th:if="${experiment.imagePath != ''}">
+                        <p><strong>Figure:</strong></p>
+                        <img th:src="@{${experiment.imagePath}}" alt="Experiment Image">
+                    </div>
+
+                </div>
+            </div>
+            <div th:if="${experiment.experimentType == 'Electrical Properties'}">
+                <p><strong>Conductivity:</strong> <span th:text="${experiment.parameterValue}"></span></p>
+            </div>
         </div>
-        <div class="filter">
-            <label for="type">Type:</label>
-            <select id="type" name="type">
-                <option value="">All Types</option>
-                <option value="Morphology">Morphology</option>
-                <option value="X-Ray Diffraction">X-Ray Diffraction</option>
-                <option value="I-V Characteristic">I-V Characteristic</option>
-                <option value="UV-Vis Spectra">UV-Vis Spectra</option>
-            </select>
-        </div>
-        <button type="submit">Apply Filters</button>
-    </form>
-    <div th:each="exp: ${experiments}" class="table-container">
-        <table border="1" class="account_table">
-            <tr>
-                <th class="table_cell">EXPERIMENT ID</th>
-                <td class="table_cell" th:text="${exp.expId}"></td>
-            </tr>
-            <tr>
-                <th class="table_cell">NANO MATERIAL USED</th>
-                <td class="table_cell" th:text="${exp.nanoMaterial.name}"></td>
-            </tr>
-            <tr>
-                <th class="table_cell">EXPERIMENT TYPE</th>
-                <td class="table_cell" th:text="${exp.type}"></td>
-            </tr>
-            <tr>
-                <th class="table_cell">PARAMETERS</th>
-                <td class="table_cell" th:text="${exp.parameters}"></td>
-            </tr>
-        </table>
     </div>
 </div>
 </body>

@@ -11,26 +11,59 @@
             padding: 0;
             height: 100vh;
             display: flex;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .welcome {
-            margin-left: 50px;
-            margin-top: 40px;
-            font-family: "Bookman Old Style",cursive;
+            background-color: #f0f8f5;
+            color: #333;
         }
 
+        .content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 250px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-family: "Bookman Old Style", cursive;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .welcome-message h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: normal;
+        }
+
+        .welcome-message h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
     </style>
 </head>
 <body>
 <div th:replace="admin/sidebar.html"></div>
-<h1 class="welcome">Welcome </h1>
-<h1 class="welcome" th:text="${name}"></h1>
+<div class="content">
+    <div class="welcome-message">
+        <h1>Welcome</h1>
+        <h2 th:text="${name}"></h2>
+    </div>
+</div>
 </body>
 </html>

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.sql.Blob;
 
 @Entity
 @Data
@@ -16,20 +16,42 @@ public class Experiment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int expId;
 
-    String type;
+    String experimentType;
 
-    String parameters;
+    String parameterType;
 
-    @OneToOne(mappedBy = "experiment", cascade = CascadeType.ALL)
-    Result result;
+    double parameterValue;
+    String imagePath;
+    Double diameter;
+    Double length;
+    Double conductivity;
+
 
     @ManyToOne
     @JoinColumn(name = "nano_id")
     NanoMaterial nanoMaterial;
 
-    public Experiment(String type, String parameters, NanoMaterial nanoMaterial) {
-        this.type = type;
-        this.parameters = parameters;
+    public Experiment(String type, String parameterType, double parameterValue, String imagePath, Double diameter, Double length, double conductivity, NanoMaterial nanoMaterial) {
+        this.experimentType = type;
+        this.parameterType = parameterType;
+        this.parameterValue = parameterValue;
+        this.imagePath = imagePath;
+        this.diameter = diameter;
+        this.length = length;
+        this.conductivity = conductivity;
         this.nanoMaterial = nanoMaterial;
+    }
+
+
+    @Override
+    public String toString(){
+        return "\n\n\n\n" +
+                experimentType + "\n" +
+                parameterType + "\n" +
+                parameterValue + "\n" +
+                imagePath + "\n" +
+                diameter + "\n" +
+                length + "\n" +
+                nanoMaterial + "\n";
     }
 }

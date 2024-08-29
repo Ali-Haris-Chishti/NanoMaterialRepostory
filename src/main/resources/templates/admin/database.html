@@ -6,146 +6,149 @@
     <title>Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
+            background-color: #f0f8f5;
+            color: #333;
         }
-        .table_heading{
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100%;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: darkslategray;
+            font-size: 24px;
+            border-bottom: 2px solid #4caf50;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #4caf50;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .table_heading {
             padding: 10px;
-            font-family: "Times New Roman", monospace;
+            font-family: 'Times New Roman', monospace;
             font-size: 18px;
             background: bisque;
+            text-align: left;
         }
-        .table_cell{
-            padding: 5px;
-            font-family: "Fira Code", monospace;
+
+        .table_cell {
+            padding: 10px;
+            font-family: 'Fira Code', monospace;
             background: burlywood;
+            text-align: left;
         }
-        .database{
-            margin-left: 75px;
-            margin-bottom: 50px;
-            margin-top: 50px;
-        }
-        h2{
-            margin-left: 50px;
-            color: darkslategray;
-            margin-top: 50px;
-            margin-bottom: 0;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
     </style>
 </head>
 <body>
 <div th:replace="admin/sidebar.html"></div>
-<div class="database">
-    <div class="user">
-        <h2>USERS:</h2>
-        <div>
-            <table border="1" class="user_table">
-                <tr>
-                    <th class="table_heading">USER ID</th>
-                    <th class="table_heading">EMAIL</th>
-                    <th class="table_heading">NAME</th>
-                    <th class="table_heading">PASSWORD</th>
-                    <th class="table_heading">PHONE</th>
-                    <th class="table_heading">ROLE</th>
-                </tr>
-                <tr th:each="user: ${users}">
-                    <td class="table_cell" th:text="${user.userId}"></td>
-                    <td class="table_cell" th:text="${user.name}"></td>
-                    <td class="table_cell" th:text="${user.email}"></td>
-                    <td class="table_cell" th:text="${user.password}"></td>
-                    <td class="table_cell" th:text="${user.phoneNumber}"></td>
-                    <td class="table_cell" th:text="${user.role}"></td>
-                </tr>
-                <tr>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                </tr>
-            </table>
+<div class="content">
+    <div class="section">
+        <h2>Users</h2>
+        <div th:each="user : ${users}" class="card">
+            <h3>User ID: <span th:text="${user.userId}"></span></h3>
+            <p>Email: <span th:text="${user.email}"></span></p>
+            <p>Name: <span th:text="${user.name}"></span></p>
+            <p>Password: <span th:text="${user.password}"></span></p>
+            <p>Phone: <span th:text="${user.phoneNumber}"></span></p>
+            <p>Role: <span th:text="${user.role}"></span></p>
         </div>
     </div>
-    <div class="nano">
-        <h2>NANO MATERIALS:</h2>
-        <div>
-            <table border="1" class="nano_table">
-                <tr>
-                    <th class="table_heading">NANO ID</th>
-                    <th class="table_heading">FORMULA</th>
-                    <th class="table_heading">NAME</th>
-                    <th class="table_heading">STRUCTURE</th>
-                    <th class="table_heading">PROPERTIES</th>
-                </tr>
-                <tr th:each="nano: ${nanoMaterials}">
-                    <td class="table_cell" th:text="${nano.nanoId}"></td>
-                    <td class="table_cell" th:text="${nano.name}"></td>
-                    <td class="table_cell" th:text="${nano.formula}"></td>
-                    <td class="table_cell" th:text="${nano.structure}"></td>
-                    <td class="table_cell" th:text="${nano.properties}"></td>
-                </tr>
-                <tr>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                </tr>
-            </table>
+    <div class="section">
+        <h2>Nano Materials</h2>
+        <div th:each="nano : ${nanoMaterials}" class="card">
+            <h3>Nano ID: <span th:text="${nano.nanoId}"></span></h3>
+            <p>Formula: <span th:text="${nano.formula}"></span></p>
+            <p>Name: <span th:text="${nano.name}"></span></p>
+            <p>Structure: <span th:text="${nano.structure}"></span></p>
+            <p>Properties: <span th:text="${nano.properties}"></span></p>
         </div>
     </div>
-    <div class="experiment">
-        <h2>EXPERIMENTS:</h2>
-        <div>
-            <table border="1" class="exp_table">
-                <tr>
-                    <th class="table_heading">EXP ID</th>
-                    <th class="table_heading">TYPE</th>
-                    <th class="table_heading">PARAMETERS</th>
-                    <th class="table_heading">NANO ID</th>
-                </tr>
-                <tr th:each="exp: ${experiments}">
-                    <td class="table_cell" th:text="${exp.expId}"></td>
-                    <td class="table_cell" th:text="${exp.type}"></td>
-                    <td class="table_cell" th:text="${exp.parameters}"></td>
-                    <td class="table_cell" th:text="${exp.nanoMaterial.nanoId}"></td>
-                </tr>
-                <tr>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                </tr>
-            </table>
+    <div class="section">
+        <h2>Experiments</h2>
+        <div th:each="exp : ${experiments}" class="card">
+            <h3>Experiment ID: <span th:text="${exp.expId}"></span></h3>
+            <p>Type: <span th:text="${exp.experimentType}"></span></p>
+            <p>Parameter Type: <span th:text="${exp.parameterType}"></span></p>
+            <p>Parameter Value: <span th:text="${exp.parameterValue}"></span></p>
+            <div th:if="${exp.diameter != 0}">
+                <p>Diameter: <span th:text="${exp.diameter}"></span></p>
+            </div>
+            <div th:if="${exp.length != 0}">
+                <p>Length: <span th:text="${exp.length}"></span></p>
+            </div>
+            <div th:if="${exp.conductivity != 0}">
+                <p>Conductivity: <span th:text="${exp.conductivity}"></span></p>
+            </div>
+            <p>Nano Material ID: <span th:text="${exp.nanoMaterial.nanoId}"></span></p>
         </div>
     </div>
-    <div class="report">
-        <h2>REPORTS:</h2>
-        <div>
-            <table border="1" class="rep_table">
-                <tr>
-                    <th class="table_heading">REPORT ID</th>
-                    <th class="table_heading">NAME</th>
-                    <th class="table_heading">CREATED AT</th>
-                    <th class="table_heading">USER ID</th>
-                </tr>
-                <tr th:each="rep: ${reports}">
-                    <td class="table_cell" th:text="${rep.reportID}"></td>
-                    <td class="table_cell" th:text="${rep.name}"></td>
-                    <td class="table_cell" th:text="${rep.createdAt}"></td>
-                    <td class="table_cell" th:text="${rep.user.userId}"></td>
-                </tr>
-                <tr>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                    <td class="table_cell" th:text="NILL"></td>
-                </tr>
-            </table>
+    <div class="section">
+        <h2>Reports</h2>
+        <div th:each="rep : ${reports}" class="card">
+            <h3>Report ID: <span th:text="${rep.reportID}"></span></h3>
+            <p>Name: <span th:text="${rep.name}"></span></p>
+            <p>Created At: <span th:text="${rep.createdAt}"></span></p>
+            <p>User ID: <span th:text="${rep.user.userId}"></span></p>
         </div>
     </div>
 </div>

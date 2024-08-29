@@ -7,7 +7,13 @@ import com.example.nmr.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,24 +62,27 @@ public class StudentService {
             if (type.isEmpty())
                 experiments = (List<Experiment>) expRepo.findAll();
             else
-                experiments = (List<Experiment>) expRepo.findByType(type);
+                experiments = (List<Experiment>) expRepo.findByExperimentType(type);
         }
         else{
             if (type.isEmpty())
                 experiments = (List<Experiment>) expRepo.findByNanoMaterial(nanoRepo.findByName(nano).get());
             else
-                experiments = (List<Experiment>) expRepo.findByNanoMaterialAndType(nanoRepo.findByName(nano).get(), type);
+                experiments = (List<Experiment>) expRepo.findByNanoMaterialAndExperimentType(nanoRepo.findByName(nano).get(), type);
         }
         model.addAttribute("experiments", experiments);
     }
 
 
     public void setStudentDetails(Model model) {
+        model.addAttribute("user", CurrentUser.get());
         model.addAttribute("accSelected", true);
-        model.addAttribute("name", CurrentUser.get().getName());
-        model.addAttribute("email", CurrentUser.get().getEmail());
-        model.addAttribute("password", CurrentUser.get().getPassword());
-        model.addAttribute("phone", CurrentUser.get().getPhoneNumber());
     }
 
+    public String uploadImage(MultipartFile image) throws IOException {
+        String path = new File("src\\main\\resources\\static").getAbsolutePath() + "\\images\\" + image.getOriginalFilename();
+        System.out.println(path);
+        Files.copy(image.getInputStream(), Path.of(path));
+        return "/images/" + image.getOriginalFilename();
+    }
 }

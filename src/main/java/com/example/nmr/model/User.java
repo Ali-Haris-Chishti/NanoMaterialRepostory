@@ -34,9 +34,6 @@ public class User {
     String role;
 
     @OneToMany(cascade = CascadeType.ALL)
-    List<Result> results;
-
-    @OneToMany(cascade = CascadeType.ALL)
     List<Report> reports;
 
     public User(String name, String email, String phoneNumber, String password, String role) {

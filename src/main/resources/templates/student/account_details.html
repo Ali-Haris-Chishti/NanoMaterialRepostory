@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Account Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,40 +11,71 @@
             padding: 0;
             height: 100vh;
             display: flex;
-        }
-        .account_table{
-            font-size: 20px;
-            alignment-baseline: center;
-            font-family: "Times New Roman",monospace;
-            margin: 200px;
-        }
-        .table_cell{
-            padding: 15px;
+            background-color: #f0f8f5;
+            color: #333;
         }
 
+        .container {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+
+        .account-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: auto;
+        }
+
+        .account-details h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CA250;
+        }
+
+        .account-details p {
+            font-size: 18px;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .account-details label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .account-details .value {
+            font-weight: normal;
+            margin-left: 12px;
+        }
     </style>
 </head>
 <body>
 <div th:replace="student/sidebar.html"></div>
-<div>
-    <table border="1" class="account_table">
-        <tr>
-            <th class="table_cell">NAME</th>
-            <td class="table_cell" th:text="${name}"></td>
-        </tr>
-        <tr>
-            <th class="table_cell">EMAIL</th>
-            <td class="table_cell" th:text="${email}"></td>
-        </tr>
-        <tr>
-            <th class="table_cell">PHONE</th>
-            <td class="table_cell" th:text="${phone}"></td>
-        </tr>
-        <tr>
-            <th class="table_cell">PASSWORD</th>
-            <td class="table_cell" th:text="${password}"></td>
-        </tr>
-    </table>
+<div class="container">
+    <div class="account-details">
+        <h1>Account Details</h1>
+        <p>
+            <label>Name:</label>
+            <span class="value" th:text="${user.name}"></span>
+        </p>
+        <p>
+            <label>Email:</label>
+            <span class="value" th:text="${user.email}"></span>
+        </p>
+        <p>
+            <label>Phone Number:</label>
+            <span class="value" th:text="${user.phoneNumber}"></span>
+        </p>
+        <p>
+            <label>Password:</label>
+            <span class="value" th:text="${user.password}"></span>
+        </p>
+    </div>
 </div>
 </body>
 </html>

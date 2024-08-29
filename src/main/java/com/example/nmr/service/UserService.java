@@ -1,9 +1,6 @@
 package com.example.nmr.service;
 
-import com.example.nmr.model.Experiment;
-import com.example.nmr.model.NanoMaterial;
-import com.example.nmr.model.Report;
-import com.example.nmr.model.User;
+import com.example.nmr.model.*;
 import com.example.nmr.repository.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -17,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,13 +75,13 @@ public class UserService {
             if (type.isEmpty())
                 experiments = (List<Experiment>) expRepo.findAll();
             else
-                experiments = (List<Experiment>) expRepo.findByType(type);
+                experiments = (List<Experiment>) expRepo.findByExperimentType(type);
         }
         else{
             if (type.isEmpty())
                 experiments = (List<Experiment>) expRepo.findByNanoMaterial(nanoRepo.findByName(nano).get());
             else
-                experiments = (List<Experiment>) expRepo.findByNanoMaterialAndType(nanoRepo.findByName(nano).get(), type);
+                experiments = (List<Experiment>) expRepo.findByNanoMaterialAndExperimentType(nanoRepo.findByName(nano).get(), type);
         }
         model.addAttribute("experiments", experiments);
     }
@@ -133,11 +129,17 @@ public class UserService {
                 contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
                 contentStream.showText("Experiment ID: " + experiment.getExpId());
                 contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
-                contentStream.showText("Experiment Type: " + experiment.getType());
+                contentStream.showText("Experiment Type: " + experiment.getExperimentType());
                 contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
                 contentStream.showText("Material Used: " + experiment.getNanoMaterial().getName());
                 contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
-                contentStream.showText("Parameters: " + experiment.getParameters());
+                contentStream.showText("Parameter Type: " + experiment.getParameterType());
+                contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
+                contentStream.showText("Parameter Value: " + experiment.getParameterValue());
+                contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
+                contentStream.showText("Diameter: " + experiment.getDiameter());
+                contentStream.newLineAtOffset(0, -offsetY); // Move to the next line
+                contentStream.showText("Length: " + experiment.getLength());
             }
 
             contentStream.endText();
@@ -151,7 +153,7 @@ public class UserService {
 
     public String saveReport() {
         String name = "report-" + LocalDate.now();
-        Report report = new Report(currentUser, name + LocalDate.now(), LocalDateTime.now());
+        Report report = new Report(CurrentUser.get(), name + LocalDate.now(), LocalDateTime.now());
         reportRepo.save(report);
         return name + ".pdf";
     }
